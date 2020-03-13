@@ -23,6 +23,7 @@ defmodule BulmaWidgetsPhxTestWeb do
 
       import Plug.Conn
       alias BulmaWidgetsPhxTestWeb.Router.Helpers, as: Routes
+      import Phoenix.LiveView.Controller
     end
   end
 
@@ -40,6 +41,7 @@ defmodule BulmaWidgetsPhxTestWeb do
 
       import BulmaWidgetsPhxTestWeb.ErrorHelpers
       alias BulmaWidgetsPhxTestWeb.Router.Helpers, as: Routes
+      import Phoenix.LiveView.Helpers
     end
   end
 
@@ -48,6 +50,7 @@ defmodule BulmaWidgetsPhxTestWeb do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 
