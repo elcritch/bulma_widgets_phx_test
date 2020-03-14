@@ -1,18 +1,15 @@
-defmodule BulmaWidgets.SelectComponent do
+defmodule BulmaWidgets.DropdownComponent do
   use Phoenix.LiveComponent
   require Logger
 
   def update(assigns, socket) do
-
-    Logger.warn("dropdown update: #{inspect assigns}")
-    # {:ok, assign(socket, :user, user)}
-    proplist? = Enum.all?(assigns.items, fn {_k, _v} -> true; _ -> false end)
+    Logger.info("dropdown component: assigns: #{inspect assigns }")
+    Logger.info("dropdown component: keys: #{inspect socket.assigns }")
+    assigns = assigns |> Map.merge(assigns.options |> Map.new)
 
     items =
-      if proplist? do
-        assigns.items |> Enum.to_list()
-      else
-        for {v, i} <- Enum.with_index(assigns.items) do {i, v} end
+      for {v, i} <- Enum.with_index(assigns.items) do
+        {to_string(i), v}
       end
 
     {:ok, socket |> assign(assigns) |> assign(items: items)}
@@ -35,7 +32,7 @@ defmodule BulmaWidgets.SelectComponent do
         <div class="dropdown-menu" id="bulma-dropdown-menu-<%= @id %>" role="menu">
           <div class="dropdown-content">
             <%= for {key, item} <- @items do %>
-              <a phx-value-item="<%= key %>" href="#" class="dropdown-item" phx-click="clicked" phx-target="#bulma-dropdown-<%= @id %>" >
+              <a phx-value-key="<%= key %>" href="#" class="dropdown-item" phx-click="clicked" phx-target="#bulma-dropdown-<%= @id %>" >
                 <%= item %>
               </a>
             <% end %>
@@ -47,11 +44,11 @@ defmodule BulmaWidgets.SelectComponent do
   end
 
   def handle_event(evt, params, socket) do
-    Logger.info("select component: evt: #{inspect evt}")
-    Logger.info("select component: params: #{inspect params}")
+    Logger.info("dropdown component: evt: #{inspect evt}")
+    Logger.info("dropdown component: params: #{inspect params}")
 
-    params |> List.keyfind(1, 0)
-    send self(), {:updated_select, socket.assigns.id}
+    {_key, item} = socket.assigns.items |> List.keyfind(params["key"], 0)
+    send self(), {:widgets, :dropdown, socket.assigns.id, item}
     {:noreply, socket}
   end
 

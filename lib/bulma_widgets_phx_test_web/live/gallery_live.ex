@@ -6,6 +6,13 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
     # layout: {BulmaWidgetsPhxTestWeb.LayoutView, "app.html"}
 
   def mount(_params, _session, socket) do
+
+    socket =
+      socket
+      |> assign(dm_test1: [selected: "Menu 1", index: 0, items: ["Menu 1", "Menu 2"]])
+      |> assign(dm_test2: [selected: "Menu 1", index: 0, items: ["Menu 1", "Menu 2"]])
+
+    Logger.warn "gallery select: assigns: #{inspect socket.assigns}"
     {:ok, socket}
   end
 
@@ -38,8 +45,8 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
           </p>
         </div>
         <h4>Live Component</h4>
-        <%= live_component @socket, BulmaWidgets.SelectComponent, id: 1, items: ["Menu 1", "Menu 2"] %>
-        <%= live_component @socket, BulmaWidgets.SelectComponent, id: 2, items: ["Menu 1", "Menu 2"] %>
+        <%= live_component @socket, BulmaWidgets.DropdownComponent, id: :dm_test1, options: @dm_test1 %>
+        <%= live_component @socket, BulmaWidgets.DropdownComponent, id: :dm_test2, options: @dm_test2 %>
 
         <div class="buttons">
           <a class="button is-primary">Primary</a>
@@ -50,9 +57,9 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
     """
   end
 
-  def handle_info({:updated_select, msg}, socket) do
+  def handle_info({:widgets, :dropdown, id, msg}, socket) do
 
-    Logger.info "updated select: #{inspect msg}"
+    Logger.info "updated select: #{inspect {id, msg}}"
     {:noreply, socket}
   end
 
