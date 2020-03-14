@@ -1,6 +1,8 @@
 defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
   use Phoenix.LiveView
+  # use Phoenix.LiveView,
+    # layout: {BulmaWidgetsPhxTestWeb.LayoutView, "app.html"}
 
   def mount(_params, _session, socket) do
     {:ok, socket}
