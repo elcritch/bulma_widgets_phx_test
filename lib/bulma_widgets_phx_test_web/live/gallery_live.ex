@@ -1,5 +1,6 @@
 defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
+  require Logger
   use Phoenix.LiveView
   # use Phoenix.LiveView,
     # layout: {BulmaWidgetsPhxTestWeb.LayoutView, "app.html"}
@@ -26,6 +27,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
           </div>
         </div>
 
+        <h4>Normal HTML</h4>
         <div class="field">
           <p class="control">
             <span class="select">
@@ -35,6 +37,9 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
             </span>
           </p>
         </div>
+        <h4>Live Component</h4>
+        <%= live_component @socket, BulmaWidgets.SelectComponent, id: 1, items: ["Menu 1", "Menu 2"] %>
+        <%= live_component @socket, BulmaWidgets.SelectComponent, id: 2, items: ["Menu 1", "Menu 2"] %>
 
         <div class="buttons">
           <a class="button is-primary">Primary</a>
@@ -44,4 +49,11 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
     """
   end
+
+  def handle_info({:updated_select, msg}, socket) do
+
+    Logger.info "updated select: #{inspect msg}"
+    {:noreply, socket}
+  end
+
 end
