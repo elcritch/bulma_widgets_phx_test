@@ -16,7 +16,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
       |> assign(test_var: "value1")
       |> widget_assign(id: :dm_test1, items: [~E"<i>Menu 1</i>", "Menu 2"] )
       |> widget_assign(id: :dm_test2, items: ["Menu 1", "Menu 2"])
-      |> widget_assign(id: :bw_tabs1, items: ["Tab 1", "Tab 2"], classes: 'is-centered ')
+      |> widget_assign(id: :bw_tabs1)
 
     Logger.warn "gallery select: assigns: #{inspect socket.assigns}"
     {:ok, socket}
@@ -55,7 +55,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
         <%= live_component @socket, DropdownComponent, @dm_test1 %>
         <%= live_component @socket, DropdownComponent, @dm_test2 %>
 
-        <%= live_component @socket, TabsComponent, @bw_tabs1 ++ [classes: 'is-right'] do %>
+        <%= live_component @socket, TabsComponent, @bw_tabs1 ++ [items: ["Tab 1", "Tab 2"], classes: 'is-right'] do %>
           <%= case @item do %>
             <%= "Tab 1" -> %>
               <h1>Tab1</h1>
