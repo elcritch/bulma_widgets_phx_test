@@ -1,5 +1,4 @@
 defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
-
   alias BulmaWidgets.DropdownComponent
   alias BulmaWidgets.TabsComponent
   require Logger
@@ -7,19 +6,18 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   import Phoenix.HTML
   use BulmaWidgets
   # use Phoenix.LiveView,
-    # layout: {BulmaWidgetsPhxTestWeb.LayoutView, "app.html"}
+  # layout: {BulmaWidgetsPhxTestWeb.LayoutView, "app.html"}
 
   def mount(_params, _session, socket) do
-
     socket =
       socket
       |> assign(test_var: "value1")
-      |> widget_assign(id: :dm_test1, items: [~E"<i>Menu 1</i>", "Menu 2"] )
+      |> widget_assign(id: :dm_test1, items: [~E"<i>Menu 1</i>", "Menu 2"])
       |> widget_assign(id: :dm_test2, items: ["Menu 1", "Menu 2"])
       |> widget_assign(id: :bw_tabs1)
       |> widget_assign(id: :bw_tabs2)
 
-    Logger.warn "gallery select: assigns: #{inspect socket.assigns}"
+    Logger.warn("gallery select: assigns: #{inspect(socket.assigns)}")
     {:ok, socket}
   end
 
@@ -103,12 +101,11 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   end
 
   def handle_widget(socket, {:update, BulmaWidgets.DropdownComponent}, id, updates) do
-    Logger.warn("updating widget: DropdownComponent: #{inspect {id, updates}}")
+    Logger.warn("updating widget: DropdownComponent: #{inspect({id, updates})}")
     socket
   end
 
   def handle_widget(socket, {:update, _module}, _id, _updates) do
     socket
   end
-
 end

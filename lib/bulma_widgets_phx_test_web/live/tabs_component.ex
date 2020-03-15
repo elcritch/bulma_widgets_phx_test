@@ -56,15 +56,19 @@ defmodule BulmaWidgets.TabsComponent do
   end
 
   def handle_event("clicked", _params, socket) do
-    send self(), {:widgets, :active, socket.assigns.id, !socket.assigns.active}
+    send(self(), {:widgets, :active, socket.assigns.id, !socket.assigns.active})
     {:noreply, socket}
   end
 
   def handle_event("selected", params, socket) do
     {key, item} = socket.assigns.items |> List.keyfind(params["key"], 0)
-    send self(), {:widgets, {:update, __MODULE__}, socket.assigns.id, [index: key, selected: item]}
-    send self(), {:widgets, :active, socket.assigns.id, false}
+
+    send(
+      self(),
+      {:widgets, {:update, __MODULE__}, socket.assigns.id, [index: key, selected: item]}
+    )
+
+    send(self(), {:widgets, :active, socket.assigns.id, false})
     {:noreply, socket}
   end
-
 end

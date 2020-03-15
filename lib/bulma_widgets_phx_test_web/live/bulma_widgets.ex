@@ -21,6 +21,7 @@ defmodule BulmaWidgets do
           socket
           |> widget_update(id, updates)
           |> handle_widget({:update, module}, id, updates)
+
         {:noreply, socket}
       end
 
@@ -32,7 +33,7 @@ defmodule BulmaWidgets do
         socket =
           socket
           |> widget_close_all()
-          |> widget_update(id, [active: toggle])
+          |> widget_update(id, active: toggle)
 
         {:noreply, socket}
       end
@@ -44,7 +45,17 @@ defmodule BulmaWidgets do
   def widget_close_all(socket) do
     deactivate =
       socket.assigns
-      |> Enum.filter(fn {_k, v} -> if is_list(v) do v[:__widget__] else false end; _ -> false end)
+      |> Enum.filter(fn
+        {_k, v} ->
+          if is_list(v) do
+            v[:__widget__]
+          else
+            false
+          end
+
+        _ ->
+          false
+      end)
       |> Enum.map(fn {k, v} -> {k, v |> Keyword.put(:active, false)} end)
 
     socket |> assign(deactivate)
@@ -56,8 +67,9 @@ defmodule BulmaWidgets do
   end
 
   def widget_update(socket, id, updates) do
-    unless socket.assigns[id], do: raise %ArgumentError{message: "widget variable not found in socket assigns"}
+    unless socket.assigns[id],
+      do: raise(%ArgumentError{message: "widget variable not found in socket assigns"})
+
     socket |> assign(%{id => Keyword.merge(socket.assigns[id], updates)})
   end
-
 end
