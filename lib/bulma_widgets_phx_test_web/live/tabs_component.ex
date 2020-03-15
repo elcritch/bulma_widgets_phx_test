@@ -14,6 +14,7 @@ defmodule BulmaWidgets.TabsComponent do
       assigns
       |> Map.put(:module, __MODULE__)
       |> Map.put_new(:centered, false)
+      |> Map.put_new(:icons, %{})
       |> Map.put_new(:index, items |> Enum.at(0) |> elem(0))
       |> Map.put_new(:selected, items |> Enum.at(0) |> elem(1))
 
@@ -30,7 +31,15 @@ defmodule BulmaWidgets.TabsComponent do
                 phx-value-key="<%= key %>"
                 phx-click="selected"
                 phx-target="#bulma-tabs-<%= @id %>" >
-              <a><%= item %></a>
+              <a>
+                <%= case Map.get(@icons, item) do %>
+                  <%= nil -> %>
+                    <%= item %>
+                  <%= icon -> %>
+                    <span class="icon is-small"><i class="<%= icon %>" aria-hidden="true"></i></span>
+                    <span><%= item %></span>
+                <%= end %>
+              </a>
             </li>
           <%= end %>
         </ul>

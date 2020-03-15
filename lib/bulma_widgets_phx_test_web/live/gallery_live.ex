@@ -66,7 +66,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
           <% end %>
         <% end %>
 
-        <%= tabs_component @socket, @bw_tabs2, items: ["Tab 1", "Tab 2"], classes: 'is-right' do %>
+        <%= tabs_component @socket, @bw_tabs2, items: ["Tab 1", "Tab 2"], icons: %{"Tab 1" => "fa fa-car"}, classes: 'is-centered is-toggle is-toggle-rounded' do %>
           <%= case @item do %>
             <%= "Tab 1" -> %>
               <h1>Tab1</h1>
@@ -75,6 +75,11 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
               <h2><%= @test_var %></h2>
           <% end %>
         <% end %>
+
+        <a>
+          <span class="icon is-small"><i class="fa fa-image" aria-hidden="true"></i></span>
+          <span>Pictures</span>
+        </a>
 
         <div class="buttons">
           <a class="button is-primary">Primary</a>
