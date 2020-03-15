@@ -9,8 +9,8 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
     socket =
       socket
-      |> assign(dm_test1: [selected: "Menu 1", index: 0, items: ["Menu 1", "Menu 2"]])
-      |> assign(dm_test2: [selected: "Menu 1", index: 0, items: ["Menu 1", "Menu 2"]])
+      |> assign(dm_test1: [id: :dm_test1, items: ["Menu 1", "Menu 2"]])
+      |> assign(dm_test2: [id: :dm_test2, items: ["Menu 1", "Menu 2"]])
 
     Logger.warn "gallery select: assigns: #{inspect socket.assigns}"
     {:ok, socket}
@@ -45,8 +45,8 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
           </p>
         </div>
         <h4>Live Component</h4>
-        <%= live_component @socket, BulmaWidgets.DropdownComponent, id: :dm_test1, options: @dm_test1 %>
-        <%= live_component @socket, BulmaWidgets.DropdownComponent, id: :dm_test2, options: @dm_test2 %>
+        <%= live_component @socket, BulmaWidgets.DropdownComponent, @dm_test1 %>
+        <%= live_component @socket, BulmaWidgets.DropdownComponent, @dm_test2 %>
 
         <div class="buttons">
           <a class="button is-primary">Primary</a>
@@ -60,7 +60,9 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   def handle_info({:widgets, :dropdown, id, msg}, socket) do
 
     Logger.info "updated select: #{inspect {id, msg}}"
-    {:noreply, socket}
+    Logger.info "updated select: #{inspect {id, socket.assigns[id]}}"
+    Logger.info "updated select: merged: #{inspect {id, Keyword.merge(msg, socket.assigns[id])}}"
+    {:noreply, socket |> assign(%{id => Keyword.merge(socket.assigns[id], msg)})}
   end
 
 end
