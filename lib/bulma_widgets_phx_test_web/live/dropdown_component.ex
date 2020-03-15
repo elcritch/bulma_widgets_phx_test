@@ -2,6 +2,8 @@ defmodule BulmaWidgets.DropdownComponent do
   use Phoenix.LiveComponent
   require Logger
 
+  defstruct id: nil, active: false, selected: nil, index: nil, items: []
+
   def update(assigns, socket) do
     items =
       for {v, i} <- Enum.with_index(assigns.items) do
@@ -11,7 +13,7 @@ defmodule BulmaWidgets.DropdownComponent do
     assigns =
       assigns
       # |> Map.merge(options |> Map.new)
-      |> Map.put(:active, false)
+      |> Map.put_new(:active, false)
       |> Map.put_new(:selected, items |> Enum.at(0) |> elem(1))
       |> Map.put_new(:index, items |> Enum.at(0) |> elem(0))
 

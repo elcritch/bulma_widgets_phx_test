@@ -1,5 +1,6 @@
 defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
+  alias BulmaWidgets.DropdownComponent
   require Logger
   use Phoenix.LiveView
   # use Phoenix.LiveView,
@@ -9,8 +10,8 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
     socket =
       socket
-      |> assign(dm_test1: [id: :dm_test1, items: ["Menu 1", "Menu 2"]])
-      |> assign(dm_test2: [id: :dm_test2, items: ["Menu 1", "Menu 2"]])
+      |> assign_widget(id: :dm_test1, items: ["Menu 1", "Menu 2"])
+      |> assign_widget(id: :dm_test2, items: ["Menu 1", "Menu 2"])
 
     Logger.warn "gallery select: assigns: #{inspect socket.assigns}"
     {:ok, socket}
@@ -65,4 +66,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
     {:noreply, socket |> assign(%{id => Keyword.merge(socket.assigns[id], msg)})}
   end
 
+  def assign_widget(socket, widget) do
+    socket |> assign(%{widget[:id] => widget})
+  end
 end
