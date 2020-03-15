@@ -60,4 +60,9 @@ defmodule BulmaWidgets do
     |> assign(%{id => Keyword.merge(socket.assigns[id] || [], updates)})
   end
 
+  defmacro tabs_component(socket, assigns, options, [do: block]) do
+    quote do
+      live_component(unquote(socket), BulmaWidgets.TabsComponent, unquote(assigns) ++ unquote(options)) do unquote(block) end
+    end
+  end
 end
