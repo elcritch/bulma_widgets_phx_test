@@ -7,12 +7,13 @@ defmodule BulmaWidgets.DropdownComponent do
   def update(assigns, socket) do
     items =
       for {v, i} <- Enum.with_index(assigns.items) do
-        {to_string(i), v}
+        {"#{i}-idx", v}
       end
 
     assigns =
       assigns
       # |> Map.merge(options |> Map.new)
+      |> Map.put_new(:active, false)
       |> Map.put_new(:selected, items |> Enum.at(0) |> elem(1))
       |> Map.put_new(:index, items |> Enum.at(0) |> elem(0))
 
@@ -54,9 +55,12 @@ defmodule BulmaWidgets.DropdownComponent do
 
   def handle_event("clicked", params, socket) do
     Logger.info("dropdown component: evt: #{inspect "clicked"}")
+    Logger.info("dropdown component: evt: #{inspect socket.assigns.id}")
     Logger.info("dropdown component: params: #{inspect params}")
 
-    {:noreply, socket |> assign(active: ! socket.assigns.active)}
+    send self(), {:widgets, :active, socket.assigns.id, !socket.assigns.active}
+    # {:noreply, socket |> assign(active: ! socket.assigns.active)}
+    {:noreply, socket}
   end
 
   def handle_event(evt, params, socket) do
@@ -65,7 +69,9 @@ defmodule BulmaWidgets.DropdownComponent do
 
     {key, item} = socket.assigns.items |> List.keyfind(params["key"], 0)
     send self(), {:widgets, :dropdown, socket.assigns.id, [index: key, selected: item]}
-    {:noreply, socket |> assign(active: false)}
+    send self(), {:widgets, :active, socket.assigns.id, false}
+    # {:noreply, socket |> assign(active: false)}
+    {:noreply, socket}
   end
 
 end
