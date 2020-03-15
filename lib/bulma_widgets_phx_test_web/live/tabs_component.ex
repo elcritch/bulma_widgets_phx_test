@@ -32,7 +32,7 @@ defmodule BulmaWidgets.TabsComponent do
                 phx-click="selected"
                 phx-target="#bulma-tabs-<%= @id %>" >
               <a>
-                <%= case Map.get(@icons, item) do %>
+                <%= case @icons[item] do %>
                   <%= nil -> %>
                     <%= item %>
                   <%= icon -> %>

@@ -17,7 +17,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
       |> widget_assign(id: :dm_test1, items: [~E"<i>Menu 1</i>", "Menu 2"] )
       |> widget_assign(id: :dm_test2, items: ["Menu 1", "Menu 2"])
       |> widget_assign(id: :bw_tabs1)
-      |> widget_assign(id: :bw_tabs2, items: ["Tab 1", "Tab 2"])
+      |> widget_assign(id: :bw_tabs2, )
 
     Logger.warn "gallery select: assigns: #{inspect socket.assigns}"
     {:ok, socket}
@@ -66,6 +66,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
         <% end %>
 
         <%= live_component @socket, TabsComponent, @bw_tabs2 ++ [
+                items: ["Tab 1", "Tab 2"],
                 icons: %{"Tab 1" => "fa fa-car"},
                 classes: 'is-centered is-toggle is-toggle-rounded'
               ]
