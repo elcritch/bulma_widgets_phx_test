@@ -56,13 +56,8 @@ defmodule BulmaWidgets do
   end
 
   def widget_update(socket, id, updates) do
-    socket
-    |> assign(%{id => Keyword.merge(socket.assigns[id] || [], updates)})
+    unless socket.assigns[id], do: raise %ArgumentError{message: "widget variable not found in socket assigns"}
+    socket |> assign(%{id => Keyword.merge(socket.assigns[id], updates)})
   end
 
-  defmacro tabs_component(socket, assigns, options, [do: block]) do
-    quote do
-      live_component(unquote(socket), BulmaWidgets.TabsComponent, unquote(assigns) ++ unquote(options)) do unquote(block) end
-    end
-  end
 end
