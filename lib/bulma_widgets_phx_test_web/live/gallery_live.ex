@@ -52,19 +52,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
         </div>
         <h4>Live Component</h4>
 
-        <%= live_component @socket, TabsComponent, @bw_tabs1 ++ [
-                items: ["Tab 1", "Tab 2"],
-                classes: 'is-right'
-            ] do %>
-          <%= case @item do %>
-            <%= "Tab 1" -> %>
-              <h1>Tab1</h1>
-              <%= live_component @socket, DropdownComponent, @dm_test1 %>
-            <%= "Tab 2" -> %>
-              <h1>Tab2</h1>
-              <h2><%= @test_var %></h2>
-          <% end %>
-        <% end %>
+        <%= live_component @socket, DropdownComponent, @dm_test1 %>
 
         <%= live_component @socket, TabsComponent, @bw_tabs2 ++ [
                 items: ["Info 1", "Info 2"],
