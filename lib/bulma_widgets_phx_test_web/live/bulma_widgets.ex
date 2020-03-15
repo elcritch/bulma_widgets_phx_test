@@ -12,6 +12,10 @@ defmodule BulmaWidgets do
         socket
       end
 
+      def handle_event("bulma-widgets-close-all", _params, socket) do
+        {:noreply, socket |> widget_close_all()}
+      end
+
       def handle_info({:widgets, {:update, module}, id, updates}, socket) do
         socket =
           socket

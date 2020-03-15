@@ -21,7 +21,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
   def render(assigns) do
     ~L"""
-    <div phx-click="click-none" >
+    <div phx-click="bulma-widgets-close-all" >
       <h1>LiveView is awesome!</h1>
       <section class="section">
         <h1 class="title">
@@ -64,10 +64,6 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
       </style>
     </div>
     """
-  end
-
-  def handle_event("click-none", _params, socket) do
-    {:noreply, socket |> widget_close_all()}
   end
 
   def handle_widget(socket, {:update, BulmaWidgets.DropdownComponent}, id, updates) do
