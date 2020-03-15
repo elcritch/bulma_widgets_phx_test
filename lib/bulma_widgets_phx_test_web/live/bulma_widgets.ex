@@ -12,11 +12,11 @@ defmodule BulmaWidgets do
         socket
       end
 
-      def handle_info({:widgets, :update, id, updates}, socket) do
+      def handle_info({:widgets, {:update, module}, id, updates}, socket) do
         socket =
           socket
           |> widget_update(id, updates)
-          |> handle_widget({:update, __MODULE__}, id, updates)
+          |> handle_widget({:update, module}, id, updates)
         {:noreply, socket}
       end
 

@@ -70,6 +70,11 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
     {:noreply, socket |> widget_close_all()}
   end
 
+  def handle_widget(socket, {:update, BulmaWidgets.DropdownComponent}, id, updates) do
+    Logger.warn("updating widget: DropdownComponent: #{inspect {id, updates}}")
+    socket
+  end
+
   def handle_widget(socket, {:update, _module}, _id, _updates) do
     socket
   end

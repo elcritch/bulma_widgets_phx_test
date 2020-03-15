@@ -59,7 +59,7 @@ defmodule BulmaWidgets.DropdownComponent do
 
   def handle_event("selected", params, socket) do
     {key, item} = socket.assigns.items |> List.keyfind(params["key"], 0)
-    send self(), {:widgets, :update, socket.assigns.id, [index: key, selected: item]}
+    send self(), {:widgets, {:update, __MODULE__}, socket.assigns.id, [index: key, selected: item]}
     send self(), {:widgets, :active, socket.assigns.id, false}
     {:noreply, socket}
   end
