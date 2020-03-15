@@ -12,20 +12,20 @@ defmodule BulmaWidgets.DropdownComponent do
 
     assigns =
       assigns
+      |> Map.put(:module, __MODULE__)
       |> Map.put_new(:active, false)
-      |> Map.put_new(:selected, items |> Enum.at(0) |> elem(1))
       |> Map.put_new(:index, items |> Enum.at(0) |> elem(0))
+      |> Map.put_new(:selected, items |> Enum.at(0) |> elem(1))
 
     {:ok, socket |> assign(assigns) |> assign(items: items)}
   end
 
   def render(assigns) do
-    Logger.info("dropdown component: render: index: #{inspect assigns.index}")
     ~L"""
-      <div class="dropdown <%= if @active do 'is-active' end %>"
+      <div class="dropdown widgets-dropdown widgets-dropdown-width <%= if @active do 'is-active' end %>"
            id="bulma-dropdown-<%= @id %>" >
-        <div class="dropdown-trigger">
-          <button class="button"
+        <div class="dropdown-trigger widgets-dropdown-width ">
+          <button class="button widgets-dropdown-width "
                   aria-haspopup="true"
                   aria-controls="bulma-dropdown-menu-<%= @id %>"
                   phx-click="clicked"
@@ -36,8 +36,8 @@ defmodule BulmaWidgets.DropdownComponent do
             </span>
           </button>
         </div>
-        <div class="dropdown-menu" id="bulma-dropdown-menu-<%= @id %>" role="menu">
-          <div class="dropdown-content">
+        <div class="dropdown-menu widgets-dropdown-width " id="bulma-dropdown-menu-<%= @id %>" role="menu">
+          <div class="dropdown-content widgets-dropdown-width ">
             <%= for {key, item} <- @items do %>
               <a href="#" class="dropdown-item <%= if key == @index do 'is-active' end %>"
                   phx-value-key="<%= key %>"

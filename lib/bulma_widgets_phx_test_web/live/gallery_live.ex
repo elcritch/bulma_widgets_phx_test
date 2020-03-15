@@ -12,7 +12,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
     socket =
       socket
-      |> widget_assign(id: :dm_test1, items: [~E"<i>Menu 1</i>", "Menu 2"])
+      |> widget_assign(id: :dm_test1, items: [~E"<i>Menu 1</i>", "Menu 2"] )
       |> widget_assign(id: :dm_test2, items: ["Menu 1", "Menu 2"])
 
     Logger.warn "gallery select: assigns: #{inspect socket.assigns}"
@@ -21,6 +21,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
   def render(assigns) do
     ~L"""
+    <div phx-click="click-none" >
       <h1>LiveView is awesome!</h1>
       <section class="section">
         <h1 class="title">
@@ -56,7 +57,21 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
           <a class="button is-link">Link</a>
         </div>
       </section>
+      <style>
+        .widgets-dropdown-width {
+          width: 12em;
+        }
+      </style>
+    </div>
     """
+  end
+
+  def handle_event("click-none", _params, socket) do
+    {:noreply, socket |> widget_close_all()}
+  end
+
+  def handle_widget(socket, {:update, _module}, _id, _updates) do
+    socket
   end
 
 end
