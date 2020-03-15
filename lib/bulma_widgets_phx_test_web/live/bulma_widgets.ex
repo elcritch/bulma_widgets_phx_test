@@ -57,7 +57,7 @@ defmodule BulmaWidgets do
 
   def widget_update(socket, id, updates) do
     socket
-    |> assign(%{id => Keyword.merge(socket.assigns[id], updates)})
+    |> assign(%{id => Keyword.merge(socket.assigns[id] || [], updates)})
   end
 
 end
