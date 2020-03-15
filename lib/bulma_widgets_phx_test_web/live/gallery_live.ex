@@ -4,6 +4,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   require Logger
   use Phoenix.LiveView
   import Phoenix.HTML
+  use BulmaWidgets
   # use Phoenix.LiveView,
     # layout: {BulmaWidgetsPhxTestWeb.LayoutView, "app.html"}
 
@@ -58,39 +59,4 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
     """
   end
 
-  def handle_info({:widgets, :dropdown, id, msg}, socket) do
-
-    Logger.info "updated select: #{inspect {id, msg}}"
-    Logger.info "updated select: #{inspect {id, socket.assigns[id]}}"
-    Logger.info "updated select: merged: #{inspect {id, Keyword.merge(msg, socket.assigns[id])}}"
-    socket =
-     socket
-     |> widget_update(id, msg)
-
-    {:noreply, socket}
-  end
-
-  def handle_info({:widgets, :active, id, toggle}, socket) do
-    deactivate =
-      socket.assigns
-      |> Enum.filter(fn {_k, v} -> if is_list(v) do v[:__widget__] else false end; _ -> false end)
-      |> Enum.map(fn {k, v} -> {k, v |> Keyword.put(:active, false)} end)
-
-    socket =
-      socket
-      |> assign(deactivate)
-      |> widget_update(id, [active: toggle])
-
-    {:noreply, socket}
-  end
-
-  def widget_assign(socket, widget) do
-    socket
-    |> assign(%{widget[:id] => widget |> Keyword.put(:__widget__, true)})
-  end
-
-  def widget_update(socket, id, updates) do
-    socket
-    |> assign(%{id => Keyword.merge(socket.assigns[id], updates)})
-  end
 end

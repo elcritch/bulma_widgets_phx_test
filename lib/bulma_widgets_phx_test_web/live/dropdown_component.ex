@@ -68,7 +68,7 @@ defmodule BulmaWidgets.DropdownComponent do
     Logger.info("dropdown component: params: #{inspect params}")
 
     {key, item} = socket.assigns.items |> List.keyfind(params["key"], 0)
-    send self(), {:widgets, :dropdown, socket.assigns.id, [index: key, selected: item]}
+    send self(), {:widgets, :update, socket.assigns.id, [index: key, selected: item]}
     send self(), {:widgets, :active, socket.assigns.id, false}
     # {:noreply, socket |> assign(active: false)}
     {:noreply, socket}
