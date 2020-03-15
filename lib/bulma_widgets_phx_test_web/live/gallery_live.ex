@@ -3,6 +3,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   alias BulmaWidgets.DropdownComponent
   require Logger
   use Phoenix.LiveView
+  import Phoenix.HTML
   # use Phoenix.LiveView,
     # layout: {BulmaWidgetsPhxTestWeb.LayoutView, "app.html"}
 
@@ -10,7 +11,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
     socket =
       socket
-      |> assign_widget(id: :dm_test1, items: ["Menu 1", "Menu 2"])
+      |> assign_widget(id: :dm_test1, items: [~E"<i>Menu 1</i>", "Menu 2"])
       |> assign_widget(id: :dm_test2, items: ["Menu 1", "Menu 2"])
 
     Logger.warn "gallery select: assigns: #{inspect socket.assigns}"
@@ -46,8 +47,8 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
           </p>
         </div>
         <h4>Live Component</h4>
-        <%= live_component @socket, BulmaWidgets.DropdownComponent, @dm_test1 %>
-        <%= live_component @socket, BulmaWidgets.DropdownComponent, @dm_test2 %>
+        <%= live_component @socket, DropdownComponent, @dm_test1 %>
+        <%= live_component @socket, DropdownComponent, @dm_test2 %>
 
         <div class="buttons">
           <a class="button is-primary">Primary</a>
@@ -67,6 +68,6 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   end
 
   def assign_widget(socket, widget) do
-    socket |> assign(%{widget[:id] => widget})
+    socket |> assign(%{widget[:id] => widget |> Keyword.put_new(:active, false)})
   end
 end

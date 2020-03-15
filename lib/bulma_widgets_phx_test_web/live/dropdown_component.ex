@@ -13,7 +13,6 @@ defmodule BulmaWidgets.DropdownComponent do
     assigns =
       assigns
       # |> Map.merge(options |> Map.new)
-      |> Map.put_new(:active, false)
       |> Map.put_new(:selected, items |> Enum.at(0) |> elem(1))
       |> Map.put_new(:index, items |> Enum.at(0) |> elem(0))
 
