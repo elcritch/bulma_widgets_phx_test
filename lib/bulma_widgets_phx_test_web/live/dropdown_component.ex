@@ -14,6 +14,7 @@ defmodule BulmaWidgets.DropdownComponent do
       assigns
       |> Map.put(:module, __MODULE__)
       |> Map.put_new(:active, false)
+      |> Map.put_new(:icon, 'fa fa-angle-down')
       |> Map.put_new(:index, items |> Enum.at(0) |> elem(0))
       |> Map.put_new(:selected, items |> Enum.at(0) |> elem(1))
 
@@ -32,7 +33,7 @@ defmodule BulmaWidgets.DropdownComponent do
                   phx-target="#bulma-dropdown-<%= @id %>" >
             <span><%= if @selected do @selected else 'Dropdown' end %></span>
             <span class="icon is-small">
-              <i class="fas fa-angle-down" aria-hidden="true"></i>
+              <i class="<%= @icon %>" aria-hidden="true"></i>
             </span>
           </button>
         </div>
