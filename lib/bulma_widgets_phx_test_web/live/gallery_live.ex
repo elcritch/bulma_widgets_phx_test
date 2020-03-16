@@ -12,12 +12,9 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
     socket =
       socket
       |> assign(test_var: "value1")
-      # |> widget_assign(id: :dm_test1, items: [~E"<i>Menu 1</i>", "Menu 2"])
-      # |> widget_assign(id: :dm_test2, items: ["Menu 1", "Menu 2"])
-      # |> widget_assign(id: :bw_tabs1)
-      # |> widget_assign(id: :bw_tabs2)
 
     Logger.info("gallery select: assigns: #{inspect(socket.assigns)}")
+    Process.send_after(self(), :update_tabs, 10_000)
     {:ok, socket}
   end
 
@@ -68,6 +65,8 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
               <h1>Info 1</h1>
               <h2><%= @test_var %></h2>
               <%= live_component(@socket, DropdownComponent, id: :dm_test2, items: ["Menu 1", "Menu 2"]) %>
+            <%= other -> %>
+              <h1><%= other %></h1>
           <% end %>
         <% end %>
 
@@ -97,6 +96,12 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
   def handle_widget(socket, {:update, _module}, _id, _updates) do
     socket
+  end
+
+  def handle_info(:update_tabs, socket) do
+    Logger.warn("update tabs message: #{inspect :update_tabs}")
+    send_update TabsComponent, id: :bw_tabs2, items: ["Info 1", "Info 2", "Info 3"]
+    {:noreply, socket}
   end
 
   def handle_info(msg, socket) do
