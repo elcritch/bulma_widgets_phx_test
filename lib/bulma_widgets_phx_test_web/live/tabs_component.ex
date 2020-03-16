@@ -4,6 +4,10 @@ defmodule BulmaWidgets.TabsComponent do
 
   defstruct id: nil, active: false, selected: nil, index: nil, items: []
 
+  def update(%{type: :command, active: _active?, id: _id}, socket) do
+    {:ok, socket}
+  end
+
   def update(assigns, socket) do
     items =
       for {v, i} <- Enum.with_index(assigns.items) do
@@ -18,6 +22,7 @@ defmodule BulmaWidgets.TabsComponent do
       |> Map.put_new(:index, items |> Enum.at(0) |> elem(0))
       |> Map.put_new(:selected, items |> Enum.at(0) |> elem(1))
 
+    send(self(), {:widgets, :register, {assigns.id, __MODULE__}})
     {:ok, socket |> assign(assigns) |> assign(items: items)}
   end
 
@@ -55,20 +60,10 @@ defmodule BulmaWidgets.TabsComponent do
     """
   end
 
-  def handle_event("clicked", _params, socket) do
-    send(self(), {:widgets, :active, socket.assigns.id, !socket.assigns.active})
-    {:noreply, socket}
-  end
-
   def handle_event("selected", params, socket) do
     {key, item} = socket.assigns.items |> List.keyfind(params["key"], 0)
 
-    send(
-      self(),
-      {:widgets, {:update, __MODULE__}, socket.assigns.id, [index: key, selected: item]}
-    )
-
     send(self(), {:widgets, :active, socket.assigns.id, false})
-    {:noreply, socket}
+    {:noreply, socket |> assign(index: key, selected: item)}
   end
 end

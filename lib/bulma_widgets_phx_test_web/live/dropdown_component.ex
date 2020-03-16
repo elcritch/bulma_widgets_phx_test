@@ -4,7 +4,15 @@ defmodule BulmaWidgets.DropdownComponent do
 
   defstruct id: nil, active: false, selected: nil, index: nil, items: []
 
+  def update(%{type: :command, active: active?, id: id}, socket) do
+    # Logger.info("updating widget: DropdownComponent: active: #{inspect({id, active?})}")
+    {:ok, socket |> assign(active: active?)}
+  end
+
   def update(assigns, socket) do
+    unless assigns[:items],
+      do: raise(%ArgumentError{message: "dropdown requires :items keyword not found in #{inspect assigns}"})
+
     items =
       for {v, i} <- Enum.with_index(assigns.items) do
         {"#{i}-idx", v}
@@ -18,6 +26,7 @@ defmodule BulmaWidgets.DropdownComponent do
       |> Map.put_new(:index, items |> Enum.at(0) |> elem(0))
       |> Map.put_new(:selected, items |> Enum.at(0) |> elem(1))
 
+    send(self(), {:widgets, :register, {assigns.id, __MODULE__}})
     {:ok, socket |> assign(assigns) |> assign(items: items)}
   end
 
@@ -55,7 +64,7 @@ defmodule BulmaWidgets.DropdownComponent do
 
   def handle_event("clicked", _params, socket) do
     send(self(), {:widgets, :active, socket.assigns.id, !socket.assigns.active})
-    {:noreply, socket}
+    {:noreply, socket |> assign(active: !socket.assigns.active)}
   end
 
   def handle_event("selected", params, socket) do

@@ -12,12 +12,12 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
     socket =
       socket
       |> assign(test_var: "value1")
-      |> widget_assign(id: :dm_test1, items: [~E"<i>Menu 1</i>", "Menu 2"])
-      |> widget_assign(id: :dm_test2, items: ["Menu 1", "Menu 2"])
-      |> widget_assign(id: :bw_tabs1)
-      |> widget_assign(id: :bw_tabs2)
+      # |> widget_assign(id: :dm_test1, items: [~E"<i>Menu 1</i>", "Menu 2"])
+      # |> widget_assign(id: :dm_test2, items: ["Menu 1", "Menu 2"])
+      # |> widget_assign(id: :bw_tabs1)
+      # |> widget_assign(id: :bw_tabs2)
 
-    Logger.warn("gallery select: assigns: #{inspect(socket.assigns)}")
+    Logger.info("gallery select: assigns: #{inspect(socket.assigns)}")
     {:ok, socket}
   end
 
@@ -52,20 +52,22 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
         </div>
         <h4>Live Component</h4>
 
-        <%= live_component @socket, DropdownComponent, @dm_test1 %>
+        <%= live_component @socket, DropdownComponent,
+              id: :dm_test1,
+              items: [~E"<i>Menu 1</i>", "Menu 2"] %>
 
-        <%= live_component @socket, TabsComponent, @bw_tabs2 ++ [
+        <%= live_component @socket, TabsComponent,
+                id: :bw_tabs2,
                 items: ["Info 1", "Info 2"],
                 icons: %{"Info 1" => "fa fa-car"},
-                classes: 'is-centered is-toggle is-toggle-rounded'
-            ] do %>
+                classes: 'is-centered is-toggle is-toggle-rounded' do %>
           <%= case @item do %>
             <%= "Info 1" -> %>
               <h1>Info 2</h1>
             <%= "Info 2" -> %>
               <h1>Info 1</h1>
               <h2><%= @test_var %></h2>
-              <%= live_component(@socket, DropdownComponent, @dm_test2) %>
+              <%= live_component(@socket, DropdownComponent, id: :dm_test2, items: ["Menu 1", "Menu 2"]) %>
           <% end %>
         <% end %>
 
@@ -96,4 +98,10 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   def handle_widget(socket, {:update, _module}, _id, _updates) do
     socket
   end
+
+  def handle_info(msg, socket) do
+    Logger.warn("unhandled message: #{inspect msg}")
+    {:noreply, socket}
+  end
+
 end

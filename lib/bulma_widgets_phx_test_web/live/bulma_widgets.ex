@@ -1,5 +1,6 @@
 defmodule BulmaWidgets do
   import Phoenix.LiveView
+  require Logger
 
   @doc """
   Imports various helpers to handle widget activations and state management.
@@ -16,25 +17,12 @@ defmodule BulmaWidgets do
         {:noreply, socket |> widget_close_all()}
       end
 
-      def handle_info({:widgets, {:update, module}, id, updates}, socket) do
-        socket =
-          socket
-          |> widget_update(id, updates)
-          |> handle_widget({:update, module}, id, updates)
-
-        {:noreply, socket}
-      end
-
-      def handle_info({:widgets, :deactivate_all}, socket) do
-        {:noreply, socket |> widget_close_all()}
+      def handle_info({:widgets, :register, widget}, socket) do
+        {:noreply, socket |> widget_register(widget)}
       end
 
       def handle_info({:widgets, :active, id, toggle}, socket) do
-        socket =
-          socket
-          |> widget_close_all()
-          |> widget_update(id, active: toggle)
-
+        widget_close_all(socket, except: {id, toggle})
         {:noreply, socket}
       end
 
@@ -42,28 +30,23 @@ defmodule BulmaWidgets do
     end
   end
 
-  def widget_close_all(socket) do
-    deactivate =
-      socket.assigns
-      |> Enum.filter(fn
-        {_k, v} ->
-          if is_list(v) do
-            v[:__widget__]
-          else
-            false
-          end
+  def widget_register(socket, widget) do
+    widgets = socket.assigns[:widgets] || []
+    socket |> assign(widgets: Keyword.merge(widgets, [widget]))
+  end
 
-        _ ->
-          false
-      end)
-      |> Enum.map(fn {k, v} -> {k, v |> Keyword.put(:active, false)} end)
-
-    socket |> assign(deactivate)
+  def widget_close_all(socket, opts \\ []) do
+    {id, toggle} = opts[:except] || {nil, false}
+    for {widget_id, module} <- socket.assigns.widgets do
+      unless widget_id == id && toggle do
+        send_update module, id: widget_id, type: :command, active: false
+      end
+    end
+    socket
   end
 
   def widget_assign(socket, widget) do
-    socket
-    |> assign(%{widget[:id] => Keyword.put(widget, :__widget__, true)})
+    socket |> assign(%{widget[:id] => Keyword.put(widget, :__widget__, true)})
   end
 
   def widget_update(socket, id, updates) do
