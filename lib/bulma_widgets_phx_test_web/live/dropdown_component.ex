@@ -23,7 +23,6 @@ defmodule BulmaWidgets.DropdownComponent do
 
     assigns =
       assigns
-      |> Map.put(:module, __MODULE__)
       |> Map.put_new(:active, false)
       |> Map.put_new(:icon, 'fa fa-angle-down')
       |> Map.put_new(:index, items |> Enum.at(0) |> elem(0))
