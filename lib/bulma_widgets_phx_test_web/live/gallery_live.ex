@@ -64,7 +64,9 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
             <%= "Info 2" -> %>
               <h1>Info 1</h1>
               <h2><%= @test_var %></h2>
-              <%= live_component(@socket, DropdownComponent, id: :dm_test2, items: ["Menu 1", "Menu 2"]) %>
+              <%= live_component(@socket, DropdownComponent,
+                    id: :dm_test2,
+                    items: ["Menu 1", "Menu 2"]) %>
             <%= other -> %>
               <h1><%= other %></h1>
           <% end %>
@@ -99,14 +101,13 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   end
 
   def handle_info(:update_tabs, socket) do
-    Logger.warn("update tabs message: #{inspect :update_tabs}")
-    send_update TabsComponent, id: :bw_tabs2, items: ["Info 1", "Info 2", "Info 3"]
+    Logger.warn("update tabs message: #{inspect(:update_tabs)}")
+    send_update(TabsComponent, id: :bw_tabs2, items: ["Info 1", "Info 2", "Info 3"])
     {:noreply, socket}
   end
 
   def handle_info(msg, socket) do
-    Logger.warn("unhandled message: #{inspect msg}")
+    Logger.warn("unhandled message: #{inspect(msg)}")
     {:noreply, socket}
   end
-
 end

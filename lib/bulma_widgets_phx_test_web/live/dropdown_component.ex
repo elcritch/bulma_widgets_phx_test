@@ -11,7 +11,10 @@ defmodule BulmaWidgets.DropdownComponent do
 
   def update(assigns, socket) do
     unless assigns[:items],
-      do: raise(%ArgumentError{message: "dropdown requires :items keyword not found in #{inspect assigns}"})
+      do:
+        raise(%ArgumentError{
+          message: "dropdown requires :items keyword not found in #{inspect(assigns)}"
+        })
 
     items =
       for {v, i} <- Enum.with_index(assigns.items) do

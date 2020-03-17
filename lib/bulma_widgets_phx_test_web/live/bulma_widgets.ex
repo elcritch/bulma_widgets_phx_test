@@ -36,11 +36,13 @@ defmodule BulmaWidgets do
 
   def widget_close_all(socket, opts \\ []) do
     {id, toggle} = opts[:except] || {nil, false}
+
     for {widget_id, module} <- socket.assigns.widgets do
       unless widget_id == id && toggle do
-        send_update module, id: widget_id, type: :command, active: false
+        send_update(module, id: widget_id, type: :command, active: false)
       end
     end
+
     socket
   end
 
