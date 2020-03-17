@@ -4,7 +4,7 @@ defmodule BulmaWidgets.DropdownComponent do
 
   defstruct id: nil, active: false, selected: nil, index: nil, items: []
 
-  def update(%{type: :command, active: active?, id: id}, socket) do
+  def update(%{type: :command, active: active?, id: _id}, socket) do
     # Logger.info("updating widget: DropdownComponent: active: #{inspect({id, active?})}")
     {:ok, socket |> assign(active: active?)}
   end
