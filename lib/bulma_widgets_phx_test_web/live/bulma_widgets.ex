@@ -22,8 +22,7 @@ defmodule BulmaWidgets do
       end
 
       def handle_info({:widgets, :active, id, toggle}, socket) do
-        widget_close_all(socket, except: {id, toggle})
-        {:noreply, socket}
+        {:noreply, socket |> widget_close_all(except: {id, toggle})}
       end
 
       defoverridable handle_widget: 4
