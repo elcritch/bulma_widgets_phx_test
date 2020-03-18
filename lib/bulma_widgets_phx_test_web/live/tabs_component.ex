@@ -16,7 +16,6 @@ defmodule BulmaWidgets.TabsComponent do
 
     assigns =
       assigns
-      |> Map.put_new(:centered, false)
       |> Map.put_new(:icons, %{})
       |> Map.put_new(:index, items |> Enum.at(0) |> elem(0))
       |> Map.put_new(:selected, items |> Enum.at(0) |> elem(1))

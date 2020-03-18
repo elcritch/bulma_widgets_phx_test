@@ -38,15 +38,6 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
         </div>
 
         <h4>Normal HTML</h4>
-        <div class="field">
-          <p class="control">
-            <span class="select">
-              <select>
-                <option>Select dropdown</option>
-              </select>
-            </span>
-          </p>
-        </div>
         <h4>Live Component</h4>
 
         <%= live_component @socket, DropdownComponent,
