@@ -22,7 +22,8 @@ defmodule BulmaWidgetsPhxTestWeb.Router do
     # pipe_through [:browser, :dashboard_layout]
     pipe_through :browser
 
-    get "/", PageController, :index
+    # get "/", PageController, :index
+    get "/", LiveController, :index
     live "/gallery.html", GalleryLive
     get "/gallery", LiveController, :index
   end
