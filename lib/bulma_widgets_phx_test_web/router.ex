@@ -24,8 +24,7 @@ defmodule BulmaWidgetsPhxTestWeb.Router do
 
     # get "/", PageController, :index
     get "/", LiveController, :index
-    live "/gallery.html", GalleryLive
-    get "/gallery", LiveController, :index
+    # get "/gallery", LiveController, :index
   end
 
   # Other scopes may use custom stacks.
