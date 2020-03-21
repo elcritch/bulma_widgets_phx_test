@@ -4,6 +4,13 @@ defmodule BulmaWidgets do
 
   @doc """
   Imports various helpers to handle widget activations and state management.
+
+  Currently only one variable `:widgets` is set in the socket assigns. This variable maintains
+  a list of widgets which allows both the library and end users interact with widgets.
+
+  One usage of this to close all other widgets that have an `active` state such as drop down menus.
+  This makes using the widgets feel more cohesive and reduces the work required to configured
+  similar behavior with uncennected widgets.
   """
   defmacro __using__(_opts) do
     quote do
@@ -29,11 +36,22 @@ defmodule BulmaWidgets do
     end
   end
 
+  @doc """
+  Helper function to register a widget in the LiveView's socket assigns under the `:widgets` variable.
+  """
   def widget_register(socket, widget) do
     widgets = socket.assigns[:widgets] || []
     socket |> assign(widgets: Keyword.merge(widgets, [widget]))
   end
 
+  @doc """
+  Helper function to close all active widgets like dropdowns or other menus.
+
+  An option can be provided to exlucde a single widget:
+
+      iex> socket |> widget_close_all(except: {:widget_id, true || false})
+
+  """
   def widget_close_all(socket, opts \\ []) do
     {id, toggle} = opts[:except] || {nil, false}
 
@@ -44,16 +62,5 @@ defmodule BulmaWidgets do
     end
 
     socket
-  end
-
-  def widget_assign(socket, widget) do
-    socket |> assign(%{widget[:id] => Keyword.put(widget, :__widget__, true)})
-  end
-
-  def widget_update(socket, id, updates) do
-    unless socket.assigns[id],
-      do: raise(%ArgumentError{message: "widget variable not found in socket assigns"})
-
-    socket |> assign(%{id => Keyword.merge(socket.assigns[id], updates)})
   end
 end
