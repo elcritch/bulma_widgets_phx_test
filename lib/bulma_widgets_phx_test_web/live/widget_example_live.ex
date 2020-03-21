@@ -3,14 +3,10 @@ defmodule WidgetExampleLive do
   alias BulmaWidgets.DropdownComponent
   alias BulmaWidgets.TabsComponent
   use Phoenix.LiveView
-  import Phoenix.HTML
   require Logger
 
   def mount(_params, _session, socket) do
-    socket =
-      socket
-      |> assign(test_var: "some example value")
-
+    socket = socket |> assign(test_var: "some example value")
     {:ok, socket}
   end
 
@@ -23,7 +19,7 @@ defmodule WidgetExampleLive do
 
         <%= live_component @socket, DropdownComponent,
               id: :dm_test1,
-              items: [~E"<i>Menu 1</i>", "Menu 2"] %>
+              items: ["Menu 1", "Menu 2"] %>
 
         <div class="box">
           <%= live_component @socket, TabsComponent,
@@ -42,7 +38,7 @@ defmodule WidgetExampleLive do
 
                 <%= live_component(@socket, DropdownComponent,
                       id: :dm_test2,
-                      items: ["Menu 1", "Menu 2"]) %>
+                      items: ["Item 1", "Item 2"]) %>
 
               <%= other -> %>
 

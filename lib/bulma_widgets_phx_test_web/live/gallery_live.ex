@@ -11,7 +11,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   def mount(_params, _session, socket) do
     socket =
       socket
-      |> assign(test_var: "value1")
+      |> assign(test_var: "example value")
 
     Logger.info("gallery select: assigns: #{inspect(socket.assigns)}")
     Process.send_after(self(), :update_tabs, 10_000)
@@ -23,56 +23,41 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
     <div phx-click="bulma-widgets-close-all" >
       <h1>LiveView is awesome!</h1>
       <section class="section">
-        <h1 class="title">
-          Bulma
-        </h1>
-
-        <p class="subtitle">
-          Modern CSS framework based on <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox">Flexbox</a>
-        </p>
-
-        <div class="field">
-          <div class="control">
-            <input class="input" type="text" placeholder="Input">
-          </div>
-        </div>
-
-        <h4>Normal HTML</h4>
-        <h4>Live Component</h4>
+        <h1 class="title"> Bulma Widget </h1>
 
         <%= live_component @socket, DropdownComponent,
               id: :dm_test1,
               items: [~E"<i>Menu 1</i>", "Menu 2"] %>
 
-        <%= live_component @socket, TabsComponent,
-                id: :bw_tabs2,
-                items: ["Info 1", "Info 2"],
-                icons: %{"Info 1" => "fa fa-car"},
-                classes: 'is-centered is-toggle is-toggle-rounded' do %>
-          <%= case @item do %>
-            <%= "Info 1" -> %>
-              <h1>Info 2</h1>
-            <%= "Info 2" -> %>
-              <h1>Info 1</h1>
-              <h2><%= @test_var %></h2>
-              <%= live_component(@socket, DropdownComponent,
-                    id: :dm_test2,
-                    items: ["Menu 1", "Menu 2"]) %>
-            <%= other -> %>
-              <h1><%= other %></h1>
+        <div class="box">
+          <%= live_component @socket, TabsComponent,
+                  id: :bw_tabs2,
+                  items: ["Info 1", "Info 2"],
+                  icons: %{"Info 1" => "fa fa-car"},
+                  classes: 'is-centered is-toggle is-toggle-rounded' do %>
+
+            <%= case @item do %>
+
+              <%= "Info 1" -> %>
+                <h1 class="title">First Tab</h1>
+
+              <%= "Info 2" -> %>
+
+                <h1 class="title">Second Tab</h1>
+                <h2 class="subtitle"><%= @test_var %></h2>
+
+                <%= live_component(@socket, DropdownComponent,
+                      id: :dm_test2,
+                      items: ["Menu 1", "Menu 2"]) %>
+
+              <%= other -> %>
+
+                <h1><%= other %></h1>
+
+            <% end %>
           <% end %>
-        <% end %>
-
-        <a>
-          <span class="icon is-small"><i class="fa fa-image" aria-hidden="true"></i></span>
-          <span>Pictures</span>
-        </a>
-
-        <div class="buttons">
-          <a class="button is-primary">Primary</a>
-          <a class="button is-link">Link</a>
-        </div>
       </section>
+
       <style>
         .widgets-dropdown-width {
           width: 12em;
