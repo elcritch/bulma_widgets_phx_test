@@ -32,6 +32,8 @@ defmodule BulmaWidgetsPhxTest.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      # {:bulma_widgets, "~> 0.1.0", path: "../bulma_widgets"},
+      {:bulma_widgets, "~> 0.1.0", github: "elcritch/bulma_widgets"},
       {:phoenix, "~> 1.4.15"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_html, "~> 2.11"},

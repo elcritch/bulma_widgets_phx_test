@@ -24,6 +24,7 @@ defmodule BulmaWidgetsPhxTestWeb.Router do
 
     # get "/", PageController, :index
     get "/", LiveController, :index
+    get "/example", LiveController, :widget_example
     # get "/gallery", LiveController, :index
   end
 
