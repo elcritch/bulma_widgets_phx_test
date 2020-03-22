@@ -32,9 +32,11 @@ defmodule BulmaWidgetsPhxTest.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      if Application.get_env(:bulma_widgets_phx_test, :environment) == :dev_local do
+      if System.get_env("MIX_TARGET") == "local" do
+        IO.puts("BULMA_WIDGETS_PHX_TEST: :local")
         {:bulma_widgets, "~> 0.1.0", path: "../bulma_widgets"}
       else
+        IO.puts("BULMA_WIDGETS_PHX_TEST: :host")
         {:bulma_widgets, "~> 0.1.0", github: "elcritch/bulma_widgets"}
       end,
       {:phoenix, "~> 1.4.15"},
