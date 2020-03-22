@@ -38,10 +38,10 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
             <%= case @item do %>
 
-              <%= "Info 1" -> %>
+              <% "Info 1" -> %>
                 <h1 class="title">First Tab</h1>
 
-              <%= "Info 2" -> %>
+              <% "Info 2" -> %>
 
                 <h1 class="title">Second Tab</h1>
                 <h2 class="subtitle"><%= @test_var %></h2>
@@ -50,7 +50,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
                       id: :dm_test2,
                       items: ["Menu 1", "Menu 2"]) %>
 
-              <%= other -> %>
+              <% other -> %>
 
                 <h1><%= other %></h1>
 
