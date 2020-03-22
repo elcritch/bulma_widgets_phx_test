@@ -59,7 +59,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
       </section>
 
       <style>
-        .widgets-dropdown-width {
+        .bulma-widgets-dropdown-width {
           width: 12em;
         }
       </style>
