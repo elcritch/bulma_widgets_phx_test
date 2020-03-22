@@ -12,6 +12,8 @@ defmodule BulmaWidgetsPhxTestWeb.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug :put_layout, {BulmaWidgetsPhxTestWeb.LayoutView, :app}
+    plug Plug.RequestId
+    plug Plug.Logger
   end
 
   pipeline :api do
