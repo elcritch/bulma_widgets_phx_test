@@ -67,8 +67,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
             <% :card_header -> %>
               <p class="modal-card-title">Modal title</p>
-              <button class="button" aria-label="close"></button>
-              <button class="delete" aria-label="close"></button>
+              <button class="delete" phx-click="delete" phx-target="<%= @target %>" aria-label="close"></button>
 
             <% :card_content -> %>
               <h2 class="title">Hello World</h2>
