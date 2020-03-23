@@ -64,9 +64,12 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
         <button class="button is-primary " aria-label="open" phx-click="open-modal-1">Open First Modal</button>
         <button class="button is-primary " aria-label="open" phx-click="open-modal-2">Open Second Modal</button>
 
-        <%= live_component @socket, ModalComponent, id: :modal1, title: "First Modal" do %>
-          <%= case @modal do %>
+        <%= live_component @socket, ModalComponent, id: :modal1,
+                title: "First Modal",
+                footer: %{ok: "Save Changes", cancel: "Cancel" }
+            do %>
 
+          <%= case @modal do %>
             <% :card_content -> %>
               <h2 class="title">Hello World</h2>
               <h4 class="title">var: <%= @modal_var %></h4>
@@ -76,14 +79,6 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
                 justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin
                 vel erat vel, interdum mattis neque.
               </p>
-
-            <% :card_footer -> %>
-              <button class="button is-success" phx-click="modal-1-save" >
-                Save changes
-              </button>
-              <button class="button" phx-click="cancel" phx-target="<%= @target %>">
-                Cancel
-              </button>
           <% end %>
         <% end %>
 
