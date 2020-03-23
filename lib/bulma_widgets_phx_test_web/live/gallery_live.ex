@@ -101,7 +101,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
       <section class="section">
         <!-- modal using default title and footers -->
-        <%= live_component @socket, CardComponent, id: :card1 do %>
+        <%= live_component @socket, CardComponent, id: :card1, footers: [Save: "card-1-save"] do %>
           <%= case @item do %>
             <% :header -> %>
 
@@ -137,6 +137,9 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
             <% :content_item -> %>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+            <% :footer -> %>
+              <a phx-click="card-2" class="card-footer-item">Save</a>
 
             <% _other -> %>
 
@@ -175,6 +178,11 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   end
 
   def handle_event("modal-2-save", _params, socket) do
+    {:noreply, socket |> widget_close(:modal2)}
+  end
+
+  def handle_event(evt, _params, socket) do
+    Logger.warn("unhandled event: #{inspect(evt)}")
     {:noreply, socket |> widget_close(:modal2)}
   end
 
