@@ -66,7 +66,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
         <%= live_component @socket, ModalComponent, id: :modal1,
                 title: "First Modal",
-                footer: %{ok: "Save Changes", cancel: "Cancel" }
+                footer: %{ok: "Save", ok_classes: "is-warning", cancel: "Cancel" }
             do %>
 
           <%= case @modal do %>
