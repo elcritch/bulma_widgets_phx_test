@@ -64,10 +64,10 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
         <%= live_component @socket, ModalComponent, id: :modal1 do %>
           <%= case @modal do %>
-
             <% :card_header -> %>
               <p class="modal-card-title">Modal title</p>
-              <button class="delete" phx-click="delete" phx-target="<%= @target %>" aria-label="close"></button>
+              <button class="delete" phx-click="delete" phx-target="<%= @target %>" aria-label="close">
+              </button>
 
             <% :card_content -> %>
               <h2 class="title">Hello World</h2>
@@ -85,7 +85,6 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
               <button class="button" phx-click="cancel" phx-target="<%= @target %>">
                 Cancel
               </button>
-
           <% end %>
         <% end %>
       </section>
