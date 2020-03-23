@@ -13,6 +13,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
     socket =
       socket
       |> assign(test_var: "example value")
+      |> assign(modal_var: "modal test data")
 
     Logger.info("gallery select: assigns: #{inspect(socket.assigns)}")
     Process.send_after(self(), :update_tabs, 10_000)
@@ -60,14 +61,37 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
       </section>
 
       <section class="section">
-        <button class="button is-primary " aria-label="open" phx-click="open-modal-1">Open Modal</button>
+        <button class="button is-primary " aria-label="open" phx-click="open-modal-1">Open First Modal</button>
+        <button class="button is-primary " aria-label="open" phx-click="open-modal-2">Open Second Modal</button>
 
-        <%= live_component @socket, ModalComponent, id: :modal1 do %>
+        <%= live_component @socket, ModalComponent, id: :modal1, title: "First Modal" do %>
+          <%= case @modal do %>
+
+            <% :card_content -> %>
+              <h2 class="title">Hello World</h2>
+              <h4 class="title">var: <%= @modal_var %></h4>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan,
+                metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum
+                justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin
+                vel erat vel, interdum mattis neque.
+              </p>
+
+            <% :card_footer -> %>
+              <button class="button is-success" phx-click="modal-1-save" >
+                Save changes
+              </button>
+              <button class="button" phx-click="cancel" phx-target="<%= @target %>">
+                Cancel
+              </button>
+          <% end %>
+        <% end %>
+
+        <%= live_component @socket, ModalComponent, id: :modal2 do %>
           <%= case @modal do %>
             <% :card_header -> %>
-              <p class="modal-card-title">Modal title</p>
+              <p class="modal-card-title">Second Modal</p>
               <button class="delete" phx-click="delete" phx-target="<%= @target %>" aria-label="close">
-              </button>
 
             <% :card_content -> %>
               <h2 class="title">Hello World</h2>
@@ -79,7 +103,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
               </p>
 
             <% :card_footer -> %>
-              <button class="button is-success" phx-click="modal-1-save" >
+              <button class="button is-success" phx-click="modal-2-save" >
                 Save changes
               </button>
               <button class="button" phx-click="cancel" phx-target="<%= @target %>">
@@ -113,6 +137,14 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
   def handle_event("modal-1-save", _params, socket) do
     {:noreply, socket |> widget_close(:modal1)}
+  end
+
+  def handle_event("open-modal-2", _params, socket) do
+    {:noreply, socket |> widget_open(:modal2)}
+  end
+
+  def handle_event("modal-2-save", _params, socket) do
+    {:noreply, socket |> widget_close(:modal2)}
   end
 
   def handle_info(:update_tabs, socket) do
