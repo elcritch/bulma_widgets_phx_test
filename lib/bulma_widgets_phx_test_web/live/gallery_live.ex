@@ -73,12 +73,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
             <% :card_content -> %>
               <h2 class="title">Hello World</h2>
               <h4 class="title">var: <%= @modal_var %></h4>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan,
-                metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum
-                justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin
-                vel erat vel, interdum mattis neque.
-              </p>
+              <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan. </p>
           <% end %>
         <% end %>
 
@@ -90,12 +85,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
             <% :card_content -> %>
               <h2 class="title">Hello World</h2>
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan,
-                metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum
-                justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin
-                vel erat vel, interdum mattis neque.
-              </p>
+              <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan. </p>
 
             <% :card_footer -> %>
               <button class="button is-success" phx-click="modal-2-save" >
