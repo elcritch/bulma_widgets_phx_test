@@ -64,6 +64,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
         <button class="button is-primary " aria-label="open" phx-click="open-modal-1">Open First Modal</button>
         <button class="button is-primary " aria-label="open" phx-click="open-modal-2">Open Second Modal</button>
 
+        <!-- modal using default title and footers -->
         <%= live_component @socket, ModalComponent, id: :modal1,
                 title: "First Modal",
                 footer: %{ok: "Save", ok_classes: "is-warning", cancel: "Cancel" }
@@ -77,6 +78,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
           <% end %>
         <% end %>
 
+        <!-- modal using explicit custom title and footers -->
         <%= live_component @socket, ModalComponent, id: :modal2 do %>
           <%= case @modal do %>
             <% :card_header -> %>
