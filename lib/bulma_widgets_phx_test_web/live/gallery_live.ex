@@ -70,8 +70,8 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
                 footer: %{ok: "Save", ok_classes: "is-warning", cancel: "Cancel" }
             do %>
 
-          <%= case @modal do %>
-            <% :card_content -> %>
+          <%= case @item do %>
+            <% :content -> %>
               <h2 class="title">Hello World</h2>
               <h4 class="title">var: <%= @modal_var %></h4>
               <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan. </p>
@@ -80,16 +80,16 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
         <!-- modal using explicit custom title and footers -->
         <%= live_component @socket, ModalComponent, id: :modal2 do %>
-          <%= case @modal do %>
-            <% :card_header -> %>
+          <%= case @item do %>
+            <% :header -> %>
               <p class="modal-card-title">Second Modal</p>
               <button class="delete" phx-click="delete" phx-target="<%= @target %>" aria-label="close">
 
-            <% :card_content -> %>
+            <% :content -> %>
               <h2 class="title">Hello World</h2>
               <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan. </p>
 
-            <% :card_footer -> %>
+            <% :footer -> %>
               <button class="button is-success" phx-click="modal-2-save" >
                 Save changes
               </button>
