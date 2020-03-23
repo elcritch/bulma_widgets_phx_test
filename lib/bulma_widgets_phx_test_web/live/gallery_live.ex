@@ -101,7 +101,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
 
       <section class="section">
         <!-- modal using default title and footers -->
-        <%= live_component @socket, CardComponent, id: :card1, footers: [Save: "card-1-save"] do %>
+        <%= live_component @socket, CardComponent, id: :card1, footers: ["Save Item": "card-1-save"] do %>
           <%= case @item do %>
             <% :header -> %>
 
