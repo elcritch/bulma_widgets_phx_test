@@ -2,6 +2,8 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
   alias BulmaWidgets.DropdownComponent
   alias BulmaWidgets.TabsComponent
   alias BulmaWidgets.ModalComponent
+  alias BulmaWidgets.CardComponent
+
   require Logger
   use Phoenix.LiveView
   import Phoenix.HTML
@@ -85,10 +87,6 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
               <p class="modal-card-title">Second Modal</p>
               <button class="delete" phx-click="delete" phx-target="<%= @target %>" aria-label="close">
 
-            <% :content -> %>
-              <h2 class="title">Hello World</h2>
-              <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan. </p>
-
             <% :footer -> %>
               <button class="button is-success" phx-click="modal-2-save" >
                 Save changes
@@ -96,6 +94,51 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
               <button class="button" phx-click="cancel" phx-target="<%= @target %>">
                 Cancel
               </button>
+            <% _other -> %>
+          <% end %>
+        <% end %>
+      </section>
+
+      <section class="section">
+        <!-- modal using default title and footers -->
+        <%= live_component @socket, CardComponent, id: :card1 do %>
+          <%= case @item do %>
+            <% :header -> %>
+              <p class="card-header-title">
+                Example Card
+              </p>
+
+            <% :content -> %>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+              <a href="#">#css</a> <a href="#">#responsive</a>
+              <br>
+              <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+
+            <% _other -> %>
+
+          <% end %>
+        <% end %>
+
+        <br>
+
+        <%= live_component @socket, CardComponent, id: :card2 do %>
+          <%= case @item do %>
+            <% :header -> %>
+              <p class="card-header-title">
+                Example Card
+              </p>
+              <a href="#" class="card-header-icon" aria-label="more options">
+                <span class="icon">
+                  <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </span>
+              </a>
+
+            <% :content -> %>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+            <% _other -> %>
+
           <% end %>
         <% end %>
       </section>
