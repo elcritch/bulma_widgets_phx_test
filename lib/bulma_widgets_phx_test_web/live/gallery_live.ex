@@ -104,18 +104,19 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
         <%= live_component @socket, CardComponent, id: :card1 do %>
           <%= case @item do %>
             <% :header -> %>
-              <p class="card-header-title">
-                Example Card
-              </p>
+
+            <% :image -> %>
 
             <% :content -> %>
+
+            <% :content_item -> %>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
               Phasellus nec iaculis mauris. <a>@bulmaio</a>.
               <a href="#">#css</a> <a href="#">#responsive</a>
               <br>
               <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
 
-            <% _other -> %>
+            <% :footer -> %>
 
           <% end %>
         <% end %>
@@ -134,7 +135,7 @@ defmodule BulmaWidgetsPhxTestWeb.GalleryLive do
                 </span>
               </a>
 
-            <% :content -> %>
+            <% :content_item -> %>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 
             <% _other -> %>
